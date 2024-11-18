@@ -1,0 +1,499 @@
+" Specify a directory for plugins
+" - For Neovim: ~/.local/share/nvim/plugged
+" - Avoid using standard Vim directory names like 'plugin'
+call plug#begin('~/.vim/plugged')
+
+" Make sure you use single quotes
+
+" Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
+Plug 'junegunn/vim-easy-align'
+
+" Any valid git URL is allowed
+Plug 'https://github.com/junegunn/vim-github-dashboard.git'
+
+" Multiple Plug commands can be written in a single line using | separators
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+
+" On-demand loading
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+
+" Using a non-master branch
+Plug 'Valloric/YouCompleteMe', { 'frozen': 1 }
+Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
+
+" Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
+Plug 'fatih/vim-go', { 'tag': '*' }
+
+" Plugin options
+Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
+
+" Plugin outside ~/.vim/plugged with post-update hook
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+
+" Unmanaged plugin (manually installed and updated)
+Plug '~/my-prototype-plugin'
+
+" Highlight several words in different colors simultaneously
+Plug 'inkarkat/vim-ingo-library'
+Plug 'inkarkat/vim-mark'
+
+" Asynchronous Lint Engine
+Plug 'w0rp/ale'
+
+" A Flexible Input Method Framework
+Plug 'fcitx/fcitx'
+
+" Text objects
+Plug 'kana/vim-textobj-user'
+Plug 'kana/vim-textobj-indent'
+Plug 'kana/vim-textobj-syntax'
+Plug 'kana/vim-textobj-function', { 'for':['c', 'cpp', 'vim', 'java'] }
+Plug 'sgur/vim-textobj-parameter'
+
+Plug 'vim-scripts/taglist.vim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+
+" Initialize plugin system
+call plug#end()
+
+if(has("win32") || has("win64") || has("win95") || has("win16"))
+    let g:iswindows=1
+    let g:islinux=0
+else
+    let g:iswindows=0
+    let g:islinux=1
+endif
+if has("gui_running")
+    let g:isGUI=1
+else
+    let g:isGUI=0
+endif
+if (g:iswindows && g:isGUI)
+    set nocompatible
+    source $VIMRUNTIME/vimrc_example.vim
+    source $VIMRUNTIME/mswin.vim
+    behave mswin
+
+    "解决菜单乱码
+    source $VIMRUNTIME/delmenu.vim
+    source $VIMRUNTIME/menu.vim
+    "解决consle输出乱码
+    language messages zh_CN.utf-8
+    set lines=47 columns=170
+    set t_Co=256
+    color lucius
+    set cursorline "highlight line
+    autocmd BufRead,BufNewFile,BufEnter *.cpp,*.cc,*.[ch],*.hh,*.hxx,*.hpp,*.sh,*.java,*.py,*.html exec ":se lines=45 columns=171"
+else
+    autocmd BufWritePost *.py,*.pyw,*.sh !chmod +x %
+endif
+
+" Indent
+set autoindent
+set cindent
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+"set expandtab
+set smarttab
+set smartindent
+filetype indent on
+
+" Syntax
+syntax on
+filetype on
+filetype plugin on
+
+" Edit & view
+set backspace=2
+"set backspace=indent,eol,start
+set ruler
+set showcmd
+set showmode
+set linebreak
+set wildmenu
+set number
+set scrolloff=2
+set history=1000
+"set cursorline "highlight line
+"set cursorcolumn "highlight colum
+set laststatus=2
+set cmdheight=2
+set showmatch
+set matchtime=1
+"set mouse=a
+"set whichwrap+=<,>,h,l   " allow backspase cursor move cross line
+
+" Search
+set hlsearch
+set incsearch
+set magic
+set sm
+set iskeyword+=_,$,@,%,#,-
+set ignorecase
+set smartcase
+set nowrapscan
+"set noincsearch
+
+" Code fold
+set foldenable
+set foldmethod=manual
+set fo+=mB
+set foldcolumn=0
+set foldmethod=indent
+set foldlevel=9999
+
+" Prompts message
+set shortmess=atI
+set confirm
+
+" Encoding & font
+"set guifont=DejaVu_Sans_Mono:h10.5:cANSI
+"set guifont=Consolas:h10.5:cANSI
+"set guifont=Bront:h10.5:cANSI
+set guifont=Code_New_Roman:h10.5:cANSI
+"set guifont=Courier_New:h10.5:cANSI
+"set guifont=Consolas_Italic:h10.5:cANSI
+"set guifont=BPmono:h10.5:cANSI
+"set guifont=Lucida_Console:h10.5:cANSI
+"set guifont=Lao_UI:h10.5:cANSI
+"set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
+"set termencoding=utf-8
+"set encoding=utf-8
+set encoding=utf-8
+set fencs=utf-8,ucs-bom,shift-jis,gb18030,gbk,gb2312,cp936
+set fileencodings=utf-8,ucs-bom,chinese
+set langmenu=zh_CN.UTF-8
+set helplang=cn
+
+" GUI
+set guioptions-=T " Hide tool bar
+set guioptions-=m " Hide menu bar
+"set go=          " no GUI button
+set noeb
+set mousemodel=popup
+set selection=inclusive
+
+" File
+"set clipboard+=unnamed
+set autoread
+set autowrite
+set nobackup
+set noswapfile
+set noundofile
+
+" Theme
+"set t_Co=256
+"color desert
+"color ron
+"color torte
+"set bg=light
+"color lucius
+"colorscheme lucius
+"LuciusWhiteHighContrast
+"LuciusBlackHighContrast
+"LuciusBlackLowContrast
+"LuciusWhiteLowContrast
+"color zellner
+"autocmd InsertLeave * se nocul  " light highlight line
+"autocmd InsertEnter * se cul    " light highlight col
+"color molokai
+
+"if has('gui_running')
+"    set background=light
+"else
+"    set background=dark
+"endif
+"colorscheme solarized
+
+
+" Key map
+command H %!xxd
+command D %!xxd -r
+" 常规模式下输入 cs 清除行尾空格
+nmap cs :%s/\s\+$//g<CR>:noh<CR>
+" 常规模式下输入 ds 清除空行
+nmap ds :g/^\s*$/d<CR>:noh<CR>
+" 常规模式下输入 cM 清除行尾 ^M 符号
+nmap cm :%s/\r$//g<CR>:noh<CR>
+" expand Tab
+nmap ct :%s/\t/    /g<CR>:noh<CR>
+nmap tm :%s/\r$//g<CR>:%s/\n/\r/g<CR>:nohl<CR>
+" Ctrl + K 插入模式下光标向上移动
+imap <c-k> <Up>
+" Ctrl + J 插入模式下光标向下移动
+imap <c-j> <Down>
+" Ctrl + H 插入模式下光标向左移动
+imap <c-h> <Left>
+" Ctrl + L 插入模式下光标向右移动
+imap <c-l> <Right>
+" Ctrl + f 光标跳转到行头
+imap <c-f> <ESC>0i
+" Ctrl + e 光标跳转到行尾
+imap <c-e> <ESC>$i
+nmap <space>    <c-d>
+nmap <s-space>  <c-u>
+" 常规模式下用空格键来开关光标行所在折叠（注：zR 展开所有折叠，zM 关闭所有折叠
+"nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
+
+" tag mgr
+set autochdir
+map  <C-S-tab>  :tabprevious<CR>
+map  <C-tab>    :tabnext<CR>
+"map  <C-w>      :tabclose<CR>
+map  <C-1>      :tabfirst<CR>
+nmap <C-S-tab>  :tabprevious<CR>
+nmap <C-tab>    :tabnext<CR>
+nmap <C-t>      :browse tabnew<CR>
+nmap <C-n>      :tabnew<CR>
+imap <C-S-tab> <Esc>:tabprevious<CR>i
+imap <C-tab> <Esc>:tabnext<CR>i
+imap <C-n> <Esc>:tabnew<CR>
+imap <C-t> <Esc>:browse tabnew<CR>
+
+
+" air-line
+let g:airline_left_sep=''
+let g:airline_right_sep=''
+"let g:airline#extensions#whitespace#max_lines = 80
+"let g:airline#extensions#whitespace#checks = [ 'indent', 'trailing', 'long' ]
+
+set viminfo+=!
+
+set diffexpr=MyDiff()
+
+" YouCompleteMe
+set completeopt=longest,menu
+"set completeopt=menu,menuone
+set conceallevel=2
+set concealcursor=vin
+set pumheight=20
+let g:ycm_log_level='error'
+"let g:ycm_global_ycm_extra_conf='$VIM\.ycm_extra_conf.py'
+let g:ycm_extra_conf_globlist=['$HOME\.ycm_extra_conf.py', '$VIM\.ycm_extra_conf.py']
+let g:ycm_complete_in_comments=1
+let g:ycm_complete_in_strings=1
+let g:ycm_collect_identifiers_from_comments_and_strings=0
+let g:ycm_confirm_extra_conf=0
+let g:ycm_cache_omnifunc=1
+let g:ycm_seed_identifiers_with_syntax=1
+let g:ycm_collect_identifiers_from_tags_files=1
+let g:clang_snippets=1
+let g:clang_conceal_snippets=1
+let g:clang_snippets_engine='clang_complete'
+let g:SuperTabDefaultCompletionType='<c-x><c-u><c-p>'
+let g:ycm_filetype_blacklist={'*':1}
+let g:ycm_filetype_whitelist={'c':1, 'cpp':1, 'h':1, 'hpp':1, 'python':1, 'make':1}
+let g:ycm_disable_for_files_larger_than_kb=3000
+"let g:ycm_key_list_select_completion=['<c-n>']
+"let g:ycm_key_list_select_completion=['<Down>']
+"let g:ycm_key_list_previous_completion=['<c-p>']
+"let g:ycm_key_list_previous_completion=['<Up>']
+"let g:ycm_auto_trigger=0 "trun off YCM
+"let g:ycm_auto_trigger=1 "trun on YCM
+
+let mapleader=','
+"inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"    " <CR> Select chosen item
+inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
+inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
+inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
+inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
+nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+
+
+" Taglist
+let Tlist_WinWidth=30
+"let Tlist_Use_Right_Window=1
+let Tlist_Use_Left_Window=1
+let Tlist_Show_One_File=1
+let Tlist_Exit_OnlyWindow=1
+let Tlist_File_Fold_Auto_Close=1
+let Tlist_GainFocus_On_ToggleOpen=1
+"let Tlist_Sort_Type='name'
+"let Tlist_Enable_Fold_Column=0
+nmap tl :TlistToggle<CR>
+
+" NERDTree
+"nmap <silent> <c-n> :NERDTreeToggle<CR>
+let NERDTreeWinSize=30
+let NERDTreeWinPos='right'
+nmap fl :NERDTreeToggle<CR>
+
+" ale: Asynchronous Lint Engine
+let g:ale_linters_explicit = 1
+let g:ale_completion_delay = 500
+let g:ale_echo_delay = 20
+let g:ale_lint_delay = 500
+let g:ale_echo_msg_format = '[%linter%] %code: %%s'
+let g:ale_lint_on_text_changed = 'normal'
+let g:ale_lint_on_insert_leave = 1
+let g:ale_c_gcc_options = '-Wall -O2 -std=c99'
+let g:ale_cpp_gcc_options = '-Wall -O2 -std=c++14'
+let g:ale_c_cppcheck_options = ''
+let g:ale_cpp_cppcheck_options = ''
+let g:airline#extensions#ale#enabled = 1
+
+" color_coded
+let g:color_coded_enabled=0
+
+" Mark : Highlight several words in different colors simultaneously
+" 1: Cyan  2:Green  3:Yellow  4:Red  5:Magenta  6:Blue
+let g:mwAutoLoadMarks = 1
+let g:mwDefaultHighlightingPalette = 'extended'
+nnoremap <leader>c :MarkClear<CR>
+
+" New file
+autocmd BufNewFile *.cpp,*.cc,*.[ch],*.hh,*.hxx,*.hpp,*.sh,*.java,*.py,*.html exec ":call SetTitle()"
+autocmd BufNewFile *.cpp,*.cc,*.c,*.sh,*.java normal G-
+autocmd BufNewFile *.hxx normal 8G
+autocmd BufNewFile *.h,*.hh,*.hpp normal 4G
+autocmd BufNewFile *.py normal 4G
+autocmd BufNewFile *.html normal 6G,12l,cw
+
+" cd to file direct
+autocmd BufRead,BufNewFile,BufEnter * cd %:p:h
+autocmd BufRead,BufNewFile * set expandtab
+autocmd BufRead,BufNewFile Makefile*,makefile* set noexpandtab
+
+
+" debug
+autocmd BufRead,BufNewFile,BufEnter *.py,*.pyw nmap <F5> :!python %<CR>
+autocmd BufRead,BufNewFile,BufEnter *.py,*.pyw imap <F5> <Esc>:!python %<CR>
+"autocmd BufRead,BufNewFile,BufEnter *.html nmap <F5> :!start "C:\Program Files\Google\Chrome\Application\chrome.exe" --incognito %:p<CR>
+"autocmd BufRead,BufNewFile,BufEnter *.html imap <F5> <Esc>:!start "C:\Program Files\Google\Chrome\Application\chrome.exe" --incognito %:p<CR>
+autocmd BufRead,BufNewFile,BufEnter *.md nmap <F5> <Plug>MarkdownPreview
+autocmd BufRead,BufNewFile,BufEnter *.md imap <F5> <Plug>MarkdownPreview
+nmap <silent> <F8> <Plug>MarkdownPreview        " for normal mode
+imap <silent> <F8> <Plug>MarkdownPreview        " for insert mode
+nmap <silent> <F9> <Plug>StopMarkdownPreview    " for normal mode
+imap <silent> <F9> <Plug>StopMarkdownPreview    " for insert mode
+
+" Function define
+function MyDiff()
+  let opt = '-a --binary '
+  if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
+  if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
+  let arg1 = v:fname_in
+  if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
+  let arg2 = v:fname_new
+  if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
+  let arg3 = v:fname_out
+  if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
+  let eq = ''
+  if $VIMRUNTIME =~ ' '
+    if &sh =~ '\<cmd'
+      let cmd = '""' . $VIMRUNTIME . '\diff"'
+      let eq = '"'
+    else
+      let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
+    endif
+  else
+    let cmd = $VIMRUNTIME . '\diff'
+  endif
+  silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . eq
+endfunction
+
+func SetTitle()
+    let auth = "lawhibao"
+    let mail = "ailunny@gmail.com"
+    if &filetype == 'sh'
+        call setline(1,"\#!/bin/bash")
+        call append(line("."), "")
+        call append(line(".")+1, "")
+        call append(line(".")+2, "")
+    elseif &filetype == 'python'
+        call setline(1,"#!/usr/bin/env python")
+        "call append(line("."),"# coding=utf-8")
+        call append(line("."),"# -*- coding: utf-8 -*-")
+        call append(line(".")+1, "")
+        call append(line(".")+2, "")
+        call append(line(".")+3, "")
+        call append(line(".")+4, "'''")
+        call append(line(".")+5, "if __name__ == '__main__':")
+        call append(line(".")+6, "    test code")
+        call append(line(".")+7, "'''")
+        call append(line(".")+8, "")
+    elseif (expand("%:e") == 'hxx')
+        let header_def = "_".expand("%:r")."_"."H"
+        let header_def = toupper(header_def)
+        call setline(1,"#ifndef ".header_def)
+        call append(line("."),"#define ".header_def."  1")
+        call append(line(".")+1, "")
+        call append(line(".")+2, "#ifdef __cplusplus")
+        call append(line(".")+3, "extern \"C\" {")
+        call append(line(".")+4, "#endif")
+        call append(line(".")+5, "")
+        call append(line(".")+6, "")
+        call append(line(".")+7, "")
+        call append(line(".")+8, "")
+        call append(line(".")+9, "#ifdef __cplusplus")
+        call append(line(".")+10, "} /* extern \"C\" */")
+        call append(line(".")+11, "#endif")
+        call append(line(".")+12, "")
+        call append(line(".")+13, "#endif /* ".header_def." */")
+        call append(line(".")+14, "")
+        unlet header_def
+    elseif (expand("%:e") == 'h') || (expand("%:e") == 'hh') || (expand("%:e") == 'hpp')
+        let header_def = "_".expand("%:r")."_".expand("%:e")
+        let header_def = toupper(header_def)
+        call setline(1,"#ifndef ".header_def)
+        call append(line("."),"#define ".header_def."  1")
+        call append(line(".")+1, "")
+        call append(line(".")+2, "")
+        call append(line(".")+3, "")
+        call append(line(".")+4, "")
+        call append(line(".")+5, "#endif /* ".header_def." */")
+        call append(line(".")+6, "")
+        unlet header_def
+    elseif &filetype == 'html'
+        call setline(1,"<!DOCTYPE html>")
+        call append(line("."),"")
+        call append(line(".")+1,"<html>")
+        call append(line(".")+2,"<head>")
+        call append(line(".")+3,"    <meta charset=\"utf-8\">")
+        call append(line(".")+4,"    <title>TITLE</title>")
+        call append(line(".")+5,"</head>")
+        call append(line(".")+6,"")
+        call append(line(".")+7,"")
+        call append(line(".")+8,"")
+        call append(line(".")+9,"</html>")
+    else
+        call setline(1, "/*")
+        call append(line("."),   "    File : ".expand("%"))
+        call append(line(".")+1, "    Auth : ".expand(auth))
+        call append(line(".")+2, "    Mail : ".expand(mail))
+        call append(line(".")+3, "    Time : ".strftime("%c"))
+        call append(line(".")+4, "*/")
+        call append(line(".")+5, "")
+    endif
+
+    if (expand("%:e") == 'cpp') || (expand("%:e") == 'cc')
+        call append(line(".")+6, "#include <iostream>")
+        call append(line(".")+7, "")
+        call append(line(".")+8, "using namespace std;")
+        call append(line(".")+9, "")
+        call append(line(".")+10, "")
+        call append(line(".")+11, "")
+        call append(line(".")+12, "")
+    endif
+    if expand("%:e") == 'c'
+        call append(line(".")+6, "#include <stdio.h>")
+        call append(line(".")+7, "")
+        call append(line(".")+8, "")
+        call append(line(".")+9, "")
+        call append(line(".")+10, "")
+    endif
+    if &filetype == 'java'
+        call append(line(".")+6,"public class ".strpart(expand("%d"),0,strlen(expand("%"))-5))
+        call append(line(".")+7,"")
+        call append(line(".")+8,"")
+        call append(line(".")+9,"")
+    endif
+    unlet auth
+    unlet mail
+endfunc
+

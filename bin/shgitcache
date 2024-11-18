@@ -1,0 +1,67 @@
+#!/bin/bash
+
+wd="/tmp/shgitcache/$(id -u)"
+pid="$wd/lock"
+wds="$wd/watchdirs"
+wdsc="$wd/watchdirsc"
+
+[ ! -e $wd ] && mkdir -p $wd
+[ ! -e $wds ] && touch $wds
+[ ! -e $wdsc ] && touch $wdsc
+[ -e $pid ] && [ -n "$(cat $pid)" ] && [ -e "/proc/$(cat $pid)" ] && [ "$1" == "reload" ] && kill $(cat $pid) && exit 0
+[ -e $pid ] && [ -n "$(cat $pid)" ] && [ -e "/proc/$(cat $pid)" ] && echo Already running pid $(cat $pid) && exit 0
+
+echo $$ > $pid
+
+headline () {
+    local fname=$1
+    hl=$(head -n 1 $fname)
+    sed -i '1d' $fname
+    echo $hl
+}
+
+tailline () {
+    local fname=$1
+    tl=$(tail -n 1 $fname)
+    sed -i '$d' $fname
+    echo $tl
+}
+
+cacheflush () {
+    local fname=$wdsc
+    hl=$(headline $fname)
+    [ -z "$hl" ] && return 0
+    [ ! -e "$hl" ] && return 0
+    cachestat $hl
+    echo "$hl" >> $fname
+    return 0
+}
+
+cachestat () {
+    [ -z "$1" ] && cacheflush && return
+
+    local _cf=$1
+    local _cb="$(dirname $(dirname $_cf))"
+    cd $_cb && git diff --quiet && (git diff --cached --quiet && echo 0 > $_cf || echo 2 > $_cf) || echo 1 > $_cf
+}
+
+gitcacheflush () {
+    tl=$(tailline $wds)
+    #[ -z "$tl" ] && echo finish && exit 0
+    #echo $tl
+    cachestat $tl
+    grep -qF "$tl" $wdsc || echo "$tl" >> $wdsc
+}
+
+daemon_start () {
+    echo "$(basename $0) starting .."
+    while true; do
+        gitcacheflush
+        sleep 1
+    done
+}
+
+[ "$1" == "" ] && ( sh $0 daemon_start & disown ) && exit 0
+
+$1
+

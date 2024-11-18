@@ -1,0 +1,31 @@
+// ctrl+shift+p : open keyboard shortcuts
+// Place your key bindings in this file to override the defaultsauto[]
+[
+    {
+        "key":"ctrl+k",
+        "command":"deleteAllRight",
+        "when":"terminalFocus"
+    },
+    {
+        "key":"ctrl+e",
+        "command":"cursorLineEnd",
+        "when":"terminalFocus"
+    },
+    {
+        "key": "f8",
+        "command": "-editor.action.marker.nextInFiles",
+        "when": "editorFocus"
+    },
+    {
+        "key": "f8",
+        "command": "highlightwords.addHighlight"
+    },
+    {
+        "key": "f8",
+        "command": "highlight.selectedWords"
+    },
+    {
+        "key": "shift+f8",
+        "command": "-highlight.selectedWords"
+    }
+]
