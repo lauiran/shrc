@@ -10,8 +10,8 @@ _curpyfiledir = realpath(join(realpath(__file__), '..'))
 logfile = join(_curpyfiledir, 'nows_history.txt')
 
 class dujitang:
-    MAX_RET_CNT = 100
     source = list()
+
     def __init__(self):
         self.sentence_log_f = logfile
         self.hash_map = hash_log.hash_map(self.sentence_log_f)
@@ -24,9 +24,9 @@ class dujitang:
         with io.open(self.sentence_log_f, 'a', encoding='utf8') as f:
             f.write('%s\n' %(sentence))
 
-    def get_sentence(self):
+    def get_sentence(self, cnt=3):
         sentence = []
-        for cnt in range(0, self.MAX_RET_CNT):
+        for cnt in range(0, cnt):
             for ss in self.source:
                 sentence = ss().get_sentence()
                 for m in sentence:
@@ -39,9 +39,9 @@ class dujitang:
         else:
             return sentence[0]
 
-    def fetch_more(self, cnt=32):
+    def fetch_more(self, cnt=9):
         for i in range(0, cnt):
-            self.get_sentence()
+            self.get_sentence(1)
         self.hash_map.write_back()
 
     def get_sentence_dry(self):
@@ -53,6 +53,8 @@ class dujitang:
                 self.hash_map.pos_reset()
                 m = self.hash_map.get_sentence()
         self.hash_map.write_back()
+        if m is None:
+            return ''
         return m
 
 
@@ -65,11 +67,14 @@ class web_site:
         pass
 
     def get_sentence(self):
-            rsp = requests.get(self.url)
+        try:
+            rsp = requests.get(self.url, timeout=3)
             if rsp.ok is True:
                 sentence = self.reg_sentence(rsp.text)
                 return sentence
-            return list()
+        except requests.exceptions.ConnectTimeout:
+            pass
+        return list()
 
 @dujitang.reg_source
 class nihaowua(web_site):
@@ -78,9 +83,14 @@ class nihaowua(web_site):
         web_site.__init__(self, self.url)
 
     def reg_sentence(self, text):
-        reg = re.compile('<div id="post.*?/div>')
-        reg2 = re.compile('<.*?>')
-        return [reg2.sub('', m).strip() for m in reg.findall(text)]
+        r = []
+        pat = re.compile('<li><a href="https://www.nihaowua.com/archives.*</li>')
+        pat2 = re.compile('<.*?>')
+        p1 = pat.findall(text)
+        for p in p1:
+            p2 = pat2.split(p)
+            r = r + p2
+        return r
 
 #@dujitang.reg_source
 class nows(web_site):

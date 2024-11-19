@@ -12,11 +12,14 @@ class hash_map:
         self.load_history_file()
 
     def load_history_file(self):
-        with io.open(self._history_file, 'r', encoding='utf8') as f:
-            line = f.readline().strip()
-            self._pos = int(line)
-            for line in f.readlines():
-                self.add_item(line.strip())
+        try:
+            with io.open(self._history_file, 'r', encoding='utf8') as f:
+                line = f.readline().strip()
+                self._pos = int(line)
+                for line in f.readlines():
+                    self.add_item(line.strip())
+        except FileNotFoundError:
+            pass
 
     def dump(self):
         cnt = 0
@@ -28,7 +31,8 @@ class hash_map:
         with io.open(self._history_file, 'w', encoding='utf8') as f:
             f.write('%d\n' %(self._pos))
             for line in self._sentences:
-                f.write('%s\n' %(line))
+                if len(line) > 0:
+                    f.write('%s\n' %(line)) if len(line) > 0
 
     def add_item(self, m):
         hv = hash(m)
