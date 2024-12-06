@@ -1,8 +1,14 @@
-if !exists('g:vimrc_auth')
-    let g:vimrc_auth = ""
-    let g:vimrc_mail = ""
+if filereadable(expand(expand("$MYVIMPATH/vimrc_auth.txt")))
+    source $MYVIMPATH/vimrc_auth.txt
+else
+    let g:vimrc_auth = input('set your name:')
+    let g:vimrc_mail = input('set your email:')
     let g:vimrc_cprt = ""
     let g:vimrc_desc = ""
+    let output = system('echo let g:vimrc_auth = \"'.g:vimrc_auth.'\" >> '.expand("$MYVIMPATH/vimrc_auth.txt"))
+    let output = system('echo let g:vimrc_mail = \"'.g:vimrc_mail.'\" >> '.expand("$MYVIMPATH/vimrc_auth.txt"))
+    let output = system('echo let g:vimrc_cprt = \"'.g:vimrc_cprt.'\" >> '.expand("$MYVIMPATH/vimrc_auth.txt"))
+    let output = system('echo let g:vimrc_desc = \"'.g:vimrc_desc.'\" >> '.expand("$MYVIMPATH/vimrc_auth.txt"))
 endif
 
 " New file

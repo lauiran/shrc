@@ -1,5 +1,7 @@
 *.txt
 *.pyc
+*.bk
+*.bak
 __pycache__/
 etc/oh-my-zsh/
 etc/vim/plugged/
