@@ -4,16 +4,19 @@
 import requests
 import hash_log
 import sys, io, os, re
+import time
 from os.path import realpath, join
 
 _curpyfiledir = realpath(join(realpath(__file__), '..'))
 logfile = join(_curpyfiledir, 'nows_history.txt')
+djt = join(_curpyfiledir, 'djt.txt')
 
 class dujitang:
     source = list()
 
     def __init__(self):
         self.sentence_log_f = logfile
+        self.djt = djt
         self.hash_map = hash_log.hash_map(self.sentence_log_f)
 
     @classmethod
@@ -56,6 +59,13 @@ class dujitang:
         if m is None:
             return ''
         return m
+    
+    def get_djt(self):
+        with open(self.djt, 'r') as fr:
+            lines = fr.readlines()
+            t = time.time_ns()
+            linesn = len(lines)
+            return lines[t%linesn].strip()
 
 
 class web_site:

@@ -122,7 +122,8 @@ if __name__ == '__main__':
     if len(sys.argv) < 2 or sys.argv[1] != '-n':
         bb = input()
     if len(bb) == 0:
-        bb = nbb.get_sentence_dry()
+        #bb = nbb.get_sentence_dry()
+        bb = nbb.get_djt()
     random.seed(time())
     if 0 == random.choice([0,1]) :
         print(cowbb(cont=bb).cow_say())
