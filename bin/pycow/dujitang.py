@@ -10,6 +10,7 @@ from os.path import realpath, join
 _curpyfiledir = realpath(join(realpath(__file__), '..'))
 logfile = join(_curpyfiledir, 'nows_history.txt')
 djt = join(_curpyfiledir, 'djt.txt')
+nhw = join(_curpyfiledir, 'nhw.txt')
 
 class dujitang:
     source = list()
@@ -17,6 +18,7 @@ class dujitang:
     def __init__(self):
         self.sentence_log_f = logfile
         self.djt = djt
+        self.nhw = nhw
         self.hash_map = hash_log.hash_map(self.sentence_log_f)
 
     @classmethod
@@ -62,6 +64,13 @@ class dujitang:
     
     def get_djt(self):
         with open(self.djt, 'r') as fr:
+            lines = fr.readlines()
+            t = time.time_ns()
+            linesn = len(lines)
+            return lines[t%linesn].strip()
+
+    def get_nhw(self):
+        with open(self.nhw, 'r') as fr:
             lines = fr.readlines()
             t = time.time_ns()
             linesn = len(lines)

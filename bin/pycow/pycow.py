@@ -117,16 +117,19 @@ class cowbb:
 
 if __name__ == '__main__':
     bb = ''
+    bb2 = ''
     nbb = dujitang.dujitang()
 
     if len(sys.argv) < 2 or sys.argv[1] != '-n':
         bb = input()
+        bb2 = bb
     if len(bb) == 0:
         #bb = nbb.get_sentence_dry()
         bb = nbb.get_djt()
+        bb2 = nbb.get_nhw()
     random.seed(time())
     if 0 == random.choice([0,1]) :
         print(cowbb(cont=bb).cow_say())
     else :
-        print(cowbb(cont=bb).cow_think())
+        print(cowbb(cont=bb2).cow_think())
 
