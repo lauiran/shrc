@@ -65,14 +65,14 @@ class dujitang:
     def get_djt(self):
         with open(self.djt, 'r') as fr:
             lines = fr.readlines()
-            t = time.time_ns()
+            t = int(time.time() * 1000)
             linesn = len(lines)
             return lines[t%linesn].strip()
 
     def get_nhw(self):
         with open(self.nhw, 'r') as fr:
             lines = fr.readlines()
-            t = time.time_ns()
+            t = int(time.time() * 1000)
             linesn = len(lines)
             return lines[t%linesn].strip()
 
