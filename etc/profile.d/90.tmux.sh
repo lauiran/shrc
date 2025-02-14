@@ -14,8 +14,9 @@ _my_tmux_cfg () {
     fi
 }
 
+if [ -n "$SSH_TTY" ]; then
 #if command -v tmux &> /dev/null; then
 #    _my_tmux_cfg
 #    _default_tmux
 #fi
-
+fi
