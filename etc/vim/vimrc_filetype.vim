@@ -15,7 +15,7 @@ endif
 autocmd BufNewFile *.cpp,*.cc,*.[ch],*.hh,*.hxx,*.hpp,*.sh,*.java,*.py,*.html exec ":call SetTitle()"
 
 " cd to file direct
-autocmd BufRead,BufNewFile,BufEnter * cd %:p:h
+"autocmd BufRead,BufNewFile,BufEnter * cd %:p:h
 autocmd BufRead,BufNewFile * set expandtab
 autocmd BufRead,BufNewFile Makefile*,makefile* set noexpandtab
 

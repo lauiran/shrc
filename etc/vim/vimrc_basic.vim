@@ -184,6 +184,7 @@ set ffs=unix,dos,mac
 " Key map
 command H %!xxd
 command D %!xxd -r
+command CD cd %:p:h
 " 常规模式下输入 cs 清除行尾空格
 nmap cs :%s/\s\+$//g<CR>:noh<CR>
 " 常规模式下输入 ds 清除空行
@@ -228,7 +229,7 @@ if has("mac") || has("macunix")
 endif
 
 " tag mgr
-set autochdir
+"set autochdir
 map  <C-S-tab>  :tabprevious<CR>
 map  <C-tab>    :tabnext<CR>
 "map  <C-w>      :tabclose<CR>
