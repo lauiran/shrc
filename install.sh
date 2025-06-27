@@ -1,17 +1,20 @@
 #!/usr/bin/env bash
 
 export CURDIR=$(dirname $(realpath $0))
+export CURDIR=$(dirname "${BASH_SOURCE[0]}")
 export BASEDIR=~/.dotusr
+export BASEDIR=$CURDIR
+echo BASEDIR:$BASEDIR
 
-if [[ -e "$BASEDIR" ]]; then
-    echo "$BASEDIR" already exists!
-else
-    echo 'ln -s -T' "$CURDIR" "$BASEDIR"
-    ln -sT $CURDIR $BASEDIR
-fi
+#if [[ -e "$BASEDIR" ]]; then
+#    echo "$BASEDIR" already exists!
+#else
+#    echo 'ln -s -T' "$CURDIR" "$BASEDIR"
+#    ln -sT $CURDIR $BASEDIR
+#fi
 
 bash $CURDIR/etc/vim/install.sh
-bash $CURDIR/etc/zsh/install.sh
+#bash $CURDIR/etc/zsh/install.sh
 
 _addprofile.sh () {
     if [[ ! -f "$1" ]]; then
