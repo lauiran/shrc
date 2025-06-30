@@ -10,7 +10,7 @@ _default_tmux () {
 
 _my_tmux_cfg () {
     if [ ! -e '~/.tmux.conf' ]; then
-        ln -sfT ~/.dotusr/etc/tmux/tmux.conf ~/.tmux.conf
+        ln -sfT ~/.shrc/etc/tmux/tmux.conf ~/.tmux.conf
     fi
 }
 

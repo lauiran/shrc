@@ -2,8 +2,8 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH=~/.dotusr/etc/oh-my-zsh
-export _Z_DATA=~/.dotusr/dotz/z
+export ZSH=~/.shrc/etc/oh-my-zsh
+export _Z_DATA=~/.shrc/dotz/z
 export PYTHONSTARTUP=~/.pytab
 
 # Set name of the theme to load. Optionally, if you set this to "random"

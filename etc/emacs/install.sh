@@ -4,7 +4,7 @@ INITEL=~/.emacs.d/init.el
 
 cat > $INITEL <<-EOF
 
-(add-to-list 'load-path "~/.dotusr/etc/emacs/")
+(add-to-list 'load-path "~/.shrc/etc/emacs/")
 (require 'init-packages)
 
 (require 'init-ui)

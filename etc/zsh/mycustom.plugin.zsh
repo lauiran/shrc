@@ -1,2 +1,2 @@
-source ~/.dotusr/etc/profile.zsh
+source ~/.shrc/etc/profile.zsh
 
