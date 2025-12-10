@@ -1,10 +1,10 @@
 
 #!/bin/bash
 
-export PATH=~/.dotusr/bin:~/.local/bin:/usr/local/bin:$PATH
+export PATH=~/.shrc/bin:~/.local/bin:/usr/local/bin:$PATH
 
-if [ -d ~/.dotusr/etc/profile.d ]; then
-  for i in ~/.dotusr/etc/profile.d/*.sh; do
+if [ -d ~/.shrc/etc/profile.d ]; then
+  for i in ~/.shrc/etc/profile.d/*.sh; do
     if [ -r $i ]; then
       . $i
     fi

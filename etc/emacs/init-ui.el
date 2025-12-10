@@ -82,7 +82,7 @@
 (set-window-buffer nil (current-buffer))
 
 ;; apply theme
-(load-file "~/.dotusr/etc/emacs/e6e1-theme.el")
+(load-file "~/.shrc/etc/emacs/e6e1-theme.el")
 (load-theme 'e6e1 t)
 
 (provide 'init-ui)

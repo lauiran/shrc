@@ -1,0 +1,164 @@
+#!/bin/bash
+
+srvlist=$(cat <<EOF
+  Host 149.2
+    Hostname 10.227.149.2
+    User who
+    Pass Who_1234
+
+  Host 149.5
+    Hostname 10.227.149.5
+    User who
+    Pass Who_1234
+
+  Host 147.22
+    # 193.193.13.109
+    Hostname 10.227.147.22
+    User upg
+    Pass Zxr_1-35
+
+  Host 149.44
+    Hostname 10.227.149.44
+    User team8
+    Pass Team8_61
+
+  Host 89
+    Hostname 10.239.54.89
+    User pm3
+    Pass Who_1234
+
+  Host 81
+    Hostname 10.227.132.81
+    User bn_ptn_rundata
+    Pass Zx_yhrj-50
+
+  Host 239
+    Hostname 10.227.152.239
+    User upg
+    Pass Zxr_1-35
+
+  Host 147.24
+    Hostname 10.227.147.24
+    User team5
+    Pass Team5_61
+
+  Host 10.227.150.197
+    Hostname 10.227.150.197
+    User who
+    Pass Who_1234
+
+  #FTP：10.229.105.242  登录15k/15K15k!123
+  Host 15k
+    Hostname 10.229.105.242
+    User 15k
+    Pass 15K15k!123
+EOF
+)
+
+host=$1
+shift
+cmd="$*"
+
+fhost=""
+furl=""
+fuser=""
+fpass=""
+
+usage () {
+  echo ${0##*/} '{host} {get|put} srcf dstf'
+  echo ${0##*/} '{list|lista|listaa}'
+  echo ${0##*/} 'list [partten]'
+  exit 1
+}
+
+listhost () {
+    while read line
+    do
+        k=${line%% *}
+        k=${k^^}
+        if [[ "$k" == "" || "${k:0:1}" == "#" ]]; then
+            continue
+        fi
+        if [[ "$k" == "HOST" ]]; then
+            echo "$line"
+        elif [[ "$k" == "HOSTNAME" ]]; then
+            echo "  $line"
+        elif [[ "$1" == "ALL" ]]; then
+            echo "  $line"
+        fi
+    done <<< "$srvlist"
+    exit 0
+}
+
+gethost () {
+    while read line
+    do
+        k=${line%% *}
+        v=${line#* }
+        k=${k^^}
+        #echo "line($line) k($k) v($v)"
+        case $k in
+            HOST )
+                fhost=$v
+                ;;
+            HOSTNAME )
+                if [[ "$fhost" == "$host" ]]; then
+                    furl=$v
+                fi
+                ;;
+            USER )
+                if [[ "$fhost" == "$host" ]]; then
+                    fuser=$v
+                fi
+                ;;
+            PASS )
+                if [[ "$fhost" == "$host" ]]; then
+                    fpass=$v
+                fi
+                ;;
+        esac
+    done <<< "$srvlist"
+
+    #echo "host($host) hostname($furl) user($fuser) pass($fpass)"
+    if [[ "$furl" == "" ]]; then
+        echo "host $host not found."
+        echo "Try: ${0##*/} {list|lista}"
+        exit 1
+    fi
+}
+
+
+if [[ "$host" == "list" ]]; then
+  if [[ "$1" == "" ]]; then
+    listhost
+  else
+    IFS='\n'
+    ss="${srvlist[*]}"
+    echo $ss | grep -C4 $1
+  fi
+  exit 0
+fi
+if [[ "$host" == "lista" ]]; then
+    listhost ALL
+fi
+if [[ "$host" == "listaa" ]]; then
+    while read line; do
+        echo $line
+    done <<< "$srvlist"
+    exit 0
+fi
+
+if [[ "$cmd" == "" ]]; then
+  usage
+fi
+
+gethost
+echo "connect to $host ($furl)"
+
+ftp -v -n -i $furl    <<EOF
+user $fuser $fpass
+binary
+$cmd
+bye
+EOF
+

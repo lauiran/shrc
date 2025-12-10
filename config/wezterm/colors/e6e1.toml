@@ -1,0 +1,15 @@
+[colors]
+foreground = "#000000"
+background = "#e6e6e1"
+cursor_bg = "#000000"
+cursor_fg = "#e6e6e1"
+ansi = [ "#000000", "#d75f5f", "#afaf00", "#ffaf00", "#87afaf", "#d787af", "#87af87", "#ff8700" ]
+brights = [ "#af0000", "#870000", "#228635", "#276678", "#005cc0", "#855080", "#178688", "#af5f00" ]
+# brights = [ "#af0000", "#af0000", "#87af00", "#d78700", "#5f8787", "#af5f87", "#5faf87", "#d75f00" ]
+
+[colors.indexed]
+
+[metadata]
+aliases = ["e6e1"]
+name = "e6e1"
+

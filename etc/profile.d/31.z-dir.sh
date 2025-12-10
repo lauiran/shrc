@@ -27,7 +27,11 @@
 #     * z -x      # remove the current directory from the datafile
 #     * z -h      # show a brief help message
 
-_Z_DATA=$HOME/.dotusr/dotz/shz
+_Z_DATA=$HOME/.shrc/dotz/$(id -u).shz
+
+[ -e "$(dirname $_Z_DATA)" ] || {
+    mkdir -p $(dirname $_Z_DATA)
+}
 
 [ -d "${_Z_DATA:-$HOME/.z}" ] && {
     echo "ERROR: z.sh's datafile (${_Z_DATA:-$HOME/.z}) is a directory."

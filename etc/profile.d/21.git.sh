@@ -16,6 +16,9 @@ gl3 () {
 }
 
 _dotgitbase() {
+    v=$(git rev-parse --absolute-git-dir 2>/dev/null)
+    echo "$v"
+    return
     local _curdir="$1"
     if [[ "$1" == "" ]]; then
         _curdir=`pwd`
@@ -24,7 +27,7 @@ _dotgitbase() {
         return
     fi
 
-    local _rp=`realpath "$_curdir"`
+    local _rp=$(readlink -f "$_curdir")
 
     if [[ "$_rp" == "/" ]]; then
         return

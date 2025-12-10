@@ -10,12 +10,14 @@ _default_tmux () {
 
 _my_tmux_cfg () {
     if [ ! -e '~/.tmux.conf' ]; then
-        ln -sfT ~/.dotusr/etc/tmux/tmux.conf ~/.tmux.conf
+        ln -sfT ~/.shrc/etc/tmux/tmux.conf ~/.tmux.conf
     fi
 }
 
+if [ -n "$SSH_TTY" ]; then
+echo "$SSH_TTY"
 #if command -v tmux &> /dev/null; then
 #    _my_tmux_cfg
 #    _default_tmux
 #fi
-
+fi

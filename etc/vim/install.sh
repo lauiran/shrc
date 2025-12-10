@@ -8,7 +8,7 @@ fi
 
 cat > $DOTVIM <<-EOF
 
-let \$MYVIMPATH='~/.dotusr/etc/vim'
+let \$MYVIMPATH='$BASEDIR/etc/vim'
 set runtimepath+=\$MYVIMPATH
 
 set ambw=double
